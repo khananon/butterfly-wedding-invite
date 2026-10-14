@@ -91,13 +91,13 @@ window.WEDDING_CONFIG = {
       description: "A vibrant morning ceremony filled with blessings and turmeric.",
       venue: "White Palace"
     },
-    {
-      time: "Night",
-      dateStr: "Tuesday, 10 Nov 2026",
-      title: "Sangeet Night",
-      description: "A night of music, dances, and heartfelt celebrations.",
-      venue: "White Palace"
-    },
+    // {
+    //   time: "Night",
+    //   dateStr: "Tuesday, 10 Nov 2026",
+    //   title: "Sangeet Night",
+    //   description: "A night of music, dances, and heartfelt celebrations.",
+    //   venue: "White Palace"
+    // },
     {
       time: "Night",
       dateStr: "Wednesday, 11 Nov 2026",
