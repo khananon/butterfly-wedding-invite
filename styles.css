@@ -134,6 +134,10 @@ html.intro-active, body.intro-active {
   object-fit: cover;
   object-position: center center;
   display: block;
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
 }
 
 /* Skip Button (Visible during playback) */
@@ -172,17 +176,16 @@ html.intro-active, body.intro-active {
 /* Cover Tap Overlay */
 .cover-tap-overlay {
   position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 270px;
+  inset: 0;
+  width: 100%;
+  height: 100%;
   z-index: 520;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
   align-items: center;
   padding-bottom: 74px;
-  background: linear-gradient(to top, rgba(70, 48, 27, 0.3) 0%, rgba(112, 79, 43, 0.12) 50%, transparent 100%);
+  background: linear-gradient(to top, rgba(70, 48, 27, 0.45) 0%, rgba(112, 79, 43, 0.15) 50%, transparent 80%);
   pointer-events: auto;
   cursor: pointer;
   transition: opacity 0.3s ease;
@@ -1423,15 +1426,21 @@ html.intro-active, body.intro-active {
   }
 }
 
-/* Mobile responsive full view (Exact full viewport experience) */
+
+/* Mobile Responsive & Performance Optimizations (iOS / Android 120Hz Silky Smooth) */
 @media (max-width: 480px) {
   html, body {
     background: var(--desktop-bg);
+    overflow: hidden;
+    height: 100%;
+    height: 100dvh;
   }
   .phone-stage {
     padding: 0;
     min-height: 100vh;
     min-height: 100dvh;
+    height: 100vh;
+    height: 100dvh;
     width: 100%;
   }
   .invitation-container {
@@ -1445,7 +1454,7 @@ html.intro-active, body.intro-active {
   .invitation-container.intro-done {
     height: 100vh;
     height: 100dvh;
-    overflow-y: auto;
+    overflow: hidden !important;
   }
   .invitation-container.intro-done .fixed-card-bg {
     position: fixed;
@@ -1456,18 +1465,78 @@ html.intro-active, body.intro-active {
     width: 100%;
     height: 100vh;
     height: 100dvh;
+    will-change: transform;
   }
-  .hero-screen {
-    min-height: 100vh;
-    min-height: 100dvh;
+
+  /* Viewport handles native smooth momentum scroll-snap */
+  .website-scroll-viewport {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100vh;
+    height: 100dvh;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    -webkit-overflow-scrolling: touch !important;
+    scroll-snap-type: y mandatory !important;
+    scroll-behavior: smooth;
+    overscroll-behavior-y: contain;
   }
-  .preview-toolbar {
-    top: 10px;
-    padding: 4px 10px;
-    gap: 8px;
-    font-size: 11px;
+
+  .invitation-part {
+    min-height: 100vh !important;
+    min-height: 100dvh !important;
+    height: 100vh !important;
+    height: 100dvh !important;
+    padding: 60px 14px 32px !important;
+    scroll-snap-align: start !important;
+    scroll-snap-stop: normal !important;
+    filter: none !important; /* Eliminate GPU-killing blur during mobile scroll */
+    will-change: opacity, transform;
+    transition: opacity 0.5s ease, transform 0.5s ease !important;
+  }
+
+  .invitation-part.part-active {
+    opacity: 1;
+    transform: scale(1) translate3d(0, 0, 0);
+  }
+
+  .invitation-part.part-passed {
+    opacity: 0;
+    transform: translateY(-16px) scale(0.96) translate3d(0, 0, 0);
+    filter: none !important;
+  }
+
+  .invitation-part.part-upcoming {
+    opacity: 0;
+    transform: translateY(16px) scale(0.96) translate3d(0, 0, 0);
+    filter: none !important;
+  }
+
+  /* Sand dissolve elements without GPU stutter on phone */
+  .sand-fade-el {
+    filter: none !important;
+    letter-spacing: normal !important;
+    will-change: opacity, transform;
+    transition: opacity 0.45s ease, transform 0.45s ease !important;
+  }
+
+  .invitation-part.part-active .sand-fade-el {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+
+  .invitation-part.part-passed .sand-fade-el,
+  .invitation-part.part-upcoming .sand-fade-el {
+    opacity: 0;
+    transform: translateY(8px) translate3d(0, 0, 0);
+  }
+
+  .sand-canvas {
+    opacity: 0.6;
   }
 }
+
 
 /* ==========================================================================
    Élysée Sage Theme Variant Support

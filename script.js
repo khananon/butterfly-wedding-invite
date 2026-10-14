@@ -321,12 +321,27 @@ document.addEventListener("DOMContentLoaded", () => {
   if (coverTapOverlay) {
     coverTapOverlay.addEventListener("click", startIntroVideo);
   }
+  if (videoIntroLayer) {
+    videoIntroLayer.addEventListener("click", () => {
+      if (introState === "idle") {
+        startIntroVideo();
+      }
+    });
+  }
+  if (invitationContainer) {
+    invitationContainer.addEventListener("click", () => {
+      if (introState === "idle") {
+        startIntroVideo();
+      }
+    });
+  }
 
-  // --- 4. 5-Part Center Scroll Tracking & Slow Smooth Controller ---
+    // --- 4. 5-Part Center Scroll Tracking & Smooth Controller ---
   const invitationParts = Array.from(document.querySelectorAll(".invitation-part"));
   const navDots = Array.from(document.querySelectorAll(".parts-nav-dots .nav-dot"));
   let currentPartIndex = 0;
   let isSmoothScrolling = false;
+  const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
 
   function setActivePart(index) {
     if (index < 0 || index >= invitationParts.length) return;
@@ -352,15 +367,13 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // Slow, ultra-smooth cubic-bezier scroll interpolation (~1.45s duration)
-  function slowScrollTo(targetY, duration = 1450) {
+  function slowScrollTo(targetY, duration = 850) {
     if (!websiteScrollViewport) return;
     const startY = websiteScrollViewport.scrollTop;
     const diff = targetY - startY;
     if (Math.abs(diff) < 2) return;
 
     isSmoothScrolling = true;
-    websiteScrollViewport.style.scrollSnapType = "none";
     const startTime = performance.now();
 
     function easeInOutCubic(t) {
@@ -379,11 +392,8 @@ document.addEventListener("DOMContentLoaded", () => {
       } else {
         websiteScrollViewport.scrollTop = targetY;
         setTimeout(() => {
-          if (websiteScrollViewport) {
-            websiteScrollViewport.style.scrollSnapType = "y mandatory";
-          }
           isSmoothScrolling = false;
-        }, 120);
+        }, 80);
       }
     }
 
@@ -391,11 +401,15 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function navigateToPart(newIndex) {
-    if (newIndex < 0 || newIndex >= invitationParts.length || isSmoothScrolling) return;
+    if (newIndex < 0 || newIndex >= invitationParts.length) return;
     setActivePart(newIndex);
     const targetEl = invitationParts[newIndex];
     if (targetEl) {
-      slowScrollTo(targetEl.offsetTop, 1450);
+      if (isTouchDevice) {
+        targetEl.scrollIntoView({ behavior: "smooth", block: "start" });
+      } else {
+        slowScrollTo(targetEl.offsetTop, 850);
+      }
     }
   }
 
@@ -408,8 +422,8 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // Slow luxurious wheel navigation
-  if (websiteScrollViewport) {
+  // Desktop Mouse Wheel Navigation
+  if (websiteScrollViewport && !isTouchDevice) {
     websiteScrollViewport.addEventListener(
       "wheel",
       (e) => {
@@ -418,7 +432,7 @@ document.addEventListener("DOMContentLoaded", () => {
           e.preventDefault();
           return;
         }
-        if (Math.abs(e.deltaY) > 18) {
+        if (Math.abs(e.deltaY) > 20) {
           e.preventDefault();
           if (e.deltaY > 0) {
             navigateToPart(currentPartIndex + 1);
@@ -431,78 +445,43 @@ document.addEventListener("DOMContentLoaded", () => {
     );
   }
 
-  // Touch navigation
-  let touchStartY = 0;
-  let touchStartX = 0;
-  let touchStartTime = 0;
-
-  if (websiteScrollViewport) {
-    websiteScrollViewport.addEventListener(
-      "touchstart",
-      (e) => {
-        if (e.touches.length > 0) {
-          touchStartY = e.touches[0].clientY;
-          touchStartX = e.touches[0].clientX;
-          touchStartTime = performance.now();
-        }
-      },
-      { passive: true }
-    );
-
-    websiteScrollViewport.addEventListener(
-      "touchend",
-      (e) => {
-        if (introState !== "done" || isSmoothScrolling) return;
-        if (e.changedTouches.length > 0) {
-          const diffY = touchStartY - e.changedTouches[0].clientY;
-          const diffX = touchStartX - e.changedTouches[0].clientX;
-          const elapsed = performance.now() - touchStartTime;
-
-          if (Math.abs(diffY) > 35 && Math.abs(diffY) > Math.abs(diffX) * 1.1 && elapsed < 800) {
-            if (diffY > 0) {
-              navigateToPart(currentPartIndex + 1);
-            } else {
-              navigateToPart(currentPartIndex - 1);
-            }
-          }
-        }
-      },
-      { passive: true }
-    );
-  }
-
-  // Track center part
+  // Smooth scroll position observer (Used on both mobile and desktop)
+  let scrollThrottleTimer = null;
   if (websiteScrollViewport) {
     websiteScrollViewport.addEventListener(
       "scroll",
       () => {
         if (isSmoothScrolling) return;
+        if (scrollThrottleTimer) return;
 
-        const viewportRect = websiteScrollViewport.getBoundingClientRect();
-        const centerY = viewportRect.top + viewportRect.height / 2;
+        scrollThrottleTimer = setTimeout(() => {
+          scrollThrottleTimer = null;
+          const viewportRect = websiteScrollViewport.getBoundingClientRect();
+          const centerY = viewportRect.top + viewportRect.height / 2;
 
-        let closestIndex = 0;
-        let minDistance = Infinity;
+          let closestIndex = 0;
+          let minDistance = Infinity;
 
-        invitationParts.forEach((part, i) => {
-          const rect = part.getBoundingClientRect();
-          const partCenter = rect.top + rect.height / 2;
-          const distance = Math.abs(centerY - partCenter);
-          if (distance < minDistance) {
-            minDistance = distance;
-            closestIndex = i;
+          invitationParts.forEach((part, i) => {
+            const rect = part.getBoundingClientRect();
+            const partCenter = rect.top + rect.height / 2;
+            const distance = Math.abs(centerY - partCenter);
+            if (distance < minDistance) {
+              minDistance = distance;
+              closestIndex = i;
+            }
+          });
+
+          if (closestIndex !== currentPartIndex) {
+            setActivePart(closestIndex);
           }
-        });
-
-        if (closestIndex !== currentPartIndex) {
-          setActivePart(closestIndex);
-        }
+        }, 50);
       },
       { passive: true }
     );
   }
 
-  // Scroll Down button glides to Part 2
+  // Scroll Down button
   if (btnScrollDown) {
     btnScrollDown.addEventListener("click", () => {
       navigateToPart(1);
@@ -518,7 +497,8 @@ document.addEventListener("DOMContentLoaded", () => {
     let width = 0;
     let height = 0;
     let particles = [];
-    const PARTICLE_COUNT = 45;
+    const isMobile = window.innerWidth <= 480;
+    const PARTICLE_COUNT = isMobile ? 18 : 40;
 
     function resizeCanvas() {
       if (!websiteScrollViewport) return;
@@ -563,7 +543,7 @@ document.addEventListener("DOMContentLoaded", () => {
         ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
         ctx.fillStyle = `rgba(${this.hue}, ${this.opacity})`;
         ctx.shadowColor = `rgba(${this.hue}, 0.8)`;
-        ctx.shadowBlur = this.size * 2;
+        if (!isMobile) { ctx.shadowBlur = this.size * 2; }
         ctx.fill();
       }
     }
