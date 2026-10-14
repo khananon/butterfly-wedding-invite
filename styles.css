@@ -1,0 +1,1690 @@
+/* ==========================================================================
+   Invitely Butterfly & Pearl Luxury Digital Wedding Invitation Theme
+   ========================================================================== */
+
+:root {
+  /* Butterfly Palette (Invitely Theme Standard) */
+  --bf-ink: #5c4f40;
+  --bf-ink-deep: #43382c;
+  --bf-gold: #b28a5d;
+  --bf-gold-deep: #8f6b42;
+  --bf-soft: #8f8072;
+  --bf-cream: #efeae3;
+  --bf-card-bg: transparent;
+  --bf-card-border: rgba(178, 138, 93, 0.28);
+  --bf-pill-border: rgba(178, 138, 93, 0.55);
+
+  /* Plain Sand/Beige Background for the desktop outside the card (matches Image 2 - #e1cfbd) */
+  --desktop-bg: #e1cfbd;
+
+  /* Typography */
+  --display: "Cinzel", "Bodoni Moda", Georgia, serif;
+  --serif: "Bodoni Moda", "Playfair Display", Georgia, serif;
+  --text: "EB Garamond", "Cormorant Garamond", Georgia, serif;
+  --script: "Ephesis", "Alex Brush", "Great Vibes", cursive;
+  --sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+
+  /* Subtle Emboss Shadows */
+  --emb-sm: 0 1px 0 rgba(255, 255, 255, 0.8), 0 -1px 0 rgba(78, 52, 22, 0.12);
+  --emb-md: 0 1.5px 1px rgba(255, 255, 255, 0.9), 0 -1.5px 1.5px rgba(78, 52, 22, 0.15);
+
+  /* Container width */
+  --phone-width: 430px;
+}
+
+/* Base Reset */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+}
+
+html, body {
+  width: 100%;
+  min-height: 100%;
+  background-color: var(--desktop-bg);
+  background: var(--desktop-bg);
+  color: var(--bf-ink);
+  font-family: var(--text);
+  overflow-x: hidden;
+  transition: background-color 0.4s ease;
+}
+
+/* Scroll Lock while Intro is active (Invitely Standard) */
+html.intro-active, body.intro-active {
+  overflow: hidden !important;
+  height: 100% !important;
+  overscroll-behavior: none;
+}
+
+/* Hidden Luxury Scrollbar (Invitely standard) */
+::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+* {
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+}
+
+/* ==========================================================================
+   Phone Stage Container
+   ========================================================================== */
+.phone-stage {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 24px 16px;
+}
+
+.invitation-container {
+  position: relative;
+  width: 100%;
+  max-width: var(--phone-width);
+  height: 860px;
+  background-color: var(--bf-cream);
+  border: 1px solid rgba(40, 30, 20, 0.35);
+  border-radius: 4px;
+  box-shadow: 
+    0 22px 70px rgba(61, 46, 34, 0.18),
+    0 4px 12px rgba(80, 60, 40, 0.08);
+  overflow: hidden; /* Strictly locked while intro is active */
+  isolation: isolate;
+}
+
+/* When intro is done, container keeps frame overflow hidden while inner viewport scrolls */
+.invitation-container.intro-done {
+  overflow: hidden;
+}
+
+/* ==========================================================================
+   1. VIDEO INTRO LAYER (Opening Gatefold with Butterfly Wax Seal)
+   ========================================================================== */
+.video-intro-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 500;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: var(--desktop-bg);
+  cursor: pointer;
+  transition: opacity 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity;
+}
+
+.video-intro-layer.fading {
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+.video-intro-layer.hidden {
+  display: none !important;
+}
+
+/* Exact video element */
+.video-intro-layer video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+  display: block;
+}
+
+/* Skip Button (Visible during playback) */
+.skip-intro-btn {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  z-index: 550;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(30, 24, 18, 0.55);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  color: #fff;
+  font-family: var(--sans);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  padding: 6px 14px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.skip-intro-btn:hover {
+  background: rgba(30, 24, 18, 0.85);
+  transform: scale(1.04);
+}
+
+.skip-intro-btn.hidden {
+  display: none !important;
+}
+
+/* Cover Tap Overlay */
+.cover-tap-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 270px;
+  z-index: 520;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  padding-bottom: 74px;
+  background: linear-gradient(to top, rgba(70, 48, 27, 0.3) 0%, rgba(112, 79, 43, 0.12) 50%, transparent 100%);
+  pointer-events: auto;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+}
+
+.video-intro-layer.playing .cover-tap-overlay {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.lacy-tap-assembly {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  animation: lacyTapFloat 3.4s ease-in-out infinite;
+}
+
+/* Pearl Divider Line */
+.pearl-divider {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.p-line {
+  width: 36px;
+  height: 1px;
+}
+
+.p-line.left {
+  background: linear-gradient(90deg, transparent, var(--bf-gold));
+}
+
+.p-line.right {
+  background: linear-gradient(90deg, var(--bf-gold), transparent);
+}
+
+.p-pearl {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 34% 30%, #fffdf8, #f0e3d0 56%, #c0a67c);
+  box-shadow: 0 1px 2px rgba(88, 62, 32, 0.35);
+}
+
+/* Lacy Open Button */
+.lacy-btn-wrapper {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.lacy-pulse-ring {
+  position: absolute;
+  inset: -7px;
+  border-radius: 999px;
+  border: 1px solid var(--bf-gold);
+  animation: lacyTapRing 2.9s ease-out infinite;
+  pointer-events: none;
+}
+
+.lacy-open-btn {
+  position: relative;
+  min-width: 228px;
+  padding: 14px 28px 13px;
+  border-radius: 999px;
+  border: 1px solid rgba(150, 113, 54, 0.62);
+  background: linear-gradient(118deg, #fdf7ec 0%, #f8efdd 46%, #fdf8ee 100%);
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 0.92),
+    0 10px 24px rgba(74, 50, 26, 0.24),
+    0 2px 6px rgba(74, 50, 26, 0.14);
+  cursor: pointer;
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.lacy-open-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 0.95),
+    0 14px 28px rgba(74, 50, 26, 0.3),
+    0 4px 8px rgba(74, 50, 26, 0.18);
+}
+
+.lacy-open-btn:active {
+  transform: scale(0.98);
+}
+
+.lacy-open-btn .btn-sheen {
+  position: absolute;
+  inset: -2px auto -2px -45%;
+  width: 36%;
+  transform: skewX(-22deg);
+  background: linear-gradient(90deg, transparent, rgba(206, 168, 106, 0.26), rgba(255, 247, 228, 0.52), transparent);
+  animation: pearlGoldSheen 4.6s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.lacy-open-btn .btn-text {
+  position: relative;
+  z-index: 1;
+  display: block;
+  white-space: nowrap;
+  font-family: var(--text);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  padding-left: 0.22em;
+  text-transform: uppercase;
+  color: #4e3a25;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.75);
+}
+/* ==========================================================================
+   2. SCROLLABLE WEBSITE CONTENT (Over Second Image Background: bg.webp)
+   ========================================================================== */
+/* ==========================================================================
+   2. SCROLLABLE WEBSITE CONTENT (5-Part Snap & Sand Dissolve Transitions)
+   ========================================================================== */
+.website-scroll-viewport {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  pointer-events: none;
+  opacity: 0;
+  overflow-y: scroll;
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  transition: opacity 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.website-scroll-viewport::-webkit-scrollbar {
+  display: none !important;
+}
+
+/* When intro is done, viewport reveals and unlocks natural snap scrolling */
+.invitation-container.intro-done .website-scroll-viewport {
+  pointer-events: auto;
+  opacity: 1;
+  animation: dissolveReveal 0.55s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes dissolveReveal {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Card Background (bg.webp: Strictly pinned behind all parts inside the arch) */
+.fixed-card-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("assets/butterfly/bg.webp");
+  background-size: cover;
+  background-position: center top;
+  background-repeat: no-repeat;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.invitation-container.intro-done .fixed-card-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Ambient Golden Sand / Dust Particle Canvas */
+.sand-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 10;
+  opacity: 0.85;
+}
+
+/* Side Pagination Dots */
+.parts-nav-dots {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 25;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  pointer-events: auto;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.invitation-container.intro-done .parts-nav-dots {
+  opacity: 1;
+}
+
+.nav-dot {
+  width: 16px;
+  height: 16px;
+  padding: 0;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  outline: none;
+}
+
+.nav-dot .dot-inner {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(178, 138, 93, 0.35);
+  border: 1px solid rgba(178, 138, 93, 0.6);
+  transition: all 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+  box-shadow: 0 1px 3px rgba(92, 79, 64, 0.2);
+}
+
+.nav-dot:hover .dot-inner {
+  transform: scale(1.3);
+  background: rgba(178, 138, 93, 0.8);
+}
+
+.nav-dot.active .dot-inner {
+  width: 9px;
+  height: 9px;
+  background: var(--bf-gold);
+  border-color: #fff;
+  box-shadow: 0 0 10px rgba(212, 175, 105, 0.9), 0 0 18px rgba(178, 138, 93, 0.6);
+  transform: scale(1.25);
+}
+
+.website-content-stream {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ==========================================================================
+   5 INVITATION PARTS (Single Part Visible at a Time in Center)
+   ========================================================================== */
+.invitation-part {
+  width: 100%;
+  min-height: 860px;
+  height: 860px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 70px 18px 40px;
+  box-sizing: border-box;
+  scroll-snap-align: center;
+  scroll-snap-stop: always;
+  position: relative;
+  opacity: 0;
+  pointer-events: none;
+  filter: blur(18px);
+  transform: scale(0.92);
+  will-change: opacity, filter, transform;
+  transition: opacity 1.45s cubic-bezier(0.22, 1, 0.36, 1),
+              filter 1.45s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 1.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@media (max-width: 480px) {
+  .invitation-part {
+    min-height: 100vh;
+    height: 100vh;
+    padding: 64px 16px 36px;
+  }
+}
+
+.invitation-part.part-active {
+  opacity: 1;
+  pointer-events: auto;
+  filter: blur(0px);
+  transform: scale(1);
+}
+
+.invitation-part.part-passed {
+  opacity: 0;
+  pointer-events: none;
+  filter: blur(18px);
+  transform: translateY(-26px) scale(0.93);
+}
+
+.invitation-part.part-upcoming {
+  opacity: 0;
+  pointer-events: none;
+  filter: blur(18px);
+  transform: translateY(26px) scale(0.93);
+}
+
+.part-content {
+  width: 100%;
+  max-width: 310px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ==========================================================================
+   GOLDEN SAND & DISSOLVE TRANSITIONS (Words forming like sand gathering)
+   ========================================================================== */
+.sand-fade-el {
+  opacity: 0;
+  filter: blur(16px) brightness(1.8);
+  letter-spacing: 0.16em;
+  transform: translateY(14px) scale(0.96);
+  will-change: opacity, filter, transform, letter-spacing;
+  transition: opacity 1.55s cubic-bezier(0.22, 1, 0.36, 1),
+              filter 1.55s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 1.55s cubic-bezier(0.22, 1, 0.36, 1),
+              letter-spacing 1.55s cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: var(--stagger, 0s);
+}
+
+.invitation-part.part-active .sand-fade-el {
+  opacity: 1;
+  filter: blur(0px) brightness(1);
+  letter-spacing: normal;
+  transform: translateY(0) scale(1);
+}
+
+.invitation-part.part-passed .sand-fade-el {
+  opacity: 0;
+  filter: blur(16px) brightness(1.4);
+  letter-spacing: 0.12em;
+  transform: translateY(-18px) scale(0.94);
+  transition-delay: 0s;
+}
+
+.invitation-part.part-upcoming .sand-fade-el {
+  opacity: 0;
+  filter: blur(16px) brightness(1.4);
+  letter-spacing: 0.12em;
+  transform: translateY(18px) scale(0.94);
+  transition-delay: 0s;
+}
+
+/* Shimmering sand words crystallizing */
+.sand-shimmer-word {
+  position: relative;
+  display: inline-block;
+}
+
+.invitation-part.part-active .sand-shimmer-word {
+  animation: sandWordGather 1.65s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes sandWordGather {
+  0% {
+    opacity: 0;
+    filter: blur(20px) brightness(2);
+    letter-spacing: 0.22em;
+    text-shadow: 0 0 28px rgba(212, 175, 105, 0.98), 0 0 48px rgba(178, 138, 93, 0.8);
+    transform: translateY(12px) scale(0.94);
+  }
+  45% {
+    opacity: 0.88;
+    filter: blur(5px) brightness(1.35);
+    letter-spacing: 0.06em;
+    text-shadow: 0 0 16px rgba(212, 175, 105, 0.7);
+  }
+  100% {
+    opacity: 1;
+    filter: blur(0px) brightness(1);
+    letter-spacing: inherit;
+    text-shadow: inherit;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* A. HERO SCREEN (Matching User's Image 1 - media_1791895624836.jpg) */
+.hero-screen {
+  position: relative;
+  width: 100%;
+  min-height: 860px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 175px 24px 40px;
+}
+
+.hero-screen-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 320px;
+}
+
+/* Top Pearl Line */
+.ornament-top-line {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+.orn-line {
+  width: 44px;
+  height: 1px;
+}
+.orn-line.l { background: linear-gradient(90deg, transparent, var(--bf-gold)); }
+.orn-line.r { background: linear-gradient(90deg, var(--bf-gold), transparent); }
+
+.orn-pearl {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #ffffff, #ebd9bf 60%, #b28a5d);
+  box-shadow: 0 1px 2px rgba(92, 79, 64, 0.3);
+}
+
+/* Names: Melis ve Barış */
+.hero-name-block {
+  margin: 0;
+}
+
+.couple-name {
+  font-family: var(--serif);
+  font-size: 58px;
+  font-weight: 400;
+  line-height: 1.05;
+  color: var(--bf-ink);
+  letter-spacing: 0.01em;
+  text-shadow: var(--emb-md);
+}
+
+.hero-script-block {
+  margin-top: -6px;
+  margin-bottom: -4px;
+}
+
+.couple-amp {
+  font-family: var(--script);
+  font-size: 44px;
+  font-weight: 400;
+  font-style: italic;
+  color: var(--bf-gold);
+  line-height: 1;
+  display: inline-block;
+  text-shadow: var(--emb-sm);
+}
+
+/* Center Diamond Ornament */
+.ornament-center-rule {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: var(--bf-gold);
+  margin-top: 18px;
+  margin-bottom: 18px;
+}
+
+.rule-half {
+  width: 40px;
+  height: 1px;
+}
+.rule-half.left { background: linear-gradient(90deg, transparent, rgba(178, 138, 93, 0.7)); }
+.rule-half.right { background: linear-gradient(90deg, rgba(178, 138, 93, 0.7), transparent); }
+
+.gem-diamond {
+  width: 9px;
+  height: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.gem-diamond svg {
+  width: 100%;
+  height: 100%;
+}
+
+.hero-greeting {
+  margin-bottom: 36px;
+}
+
+.greeting-text {
+  font-family: var(--text);
+  font-style: italic;
+  font-size: 15px;
+  color: var(--bf-soft);
+  max-width: 260px;
+  margin: 0 auto;
+  line-height: 1.45;
+  text-shadow: var(--emb-sm);
+}
+
+/* "Scroll Down ↓" Pill Button (Matching Image 1) */
+.hero-scroll-btn-wrap {
+  margin-top: 8px;
+}
+
+.scroll-down-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 22px;
+  border-radius: 999px;
+  border: 1px solid var(--bf-pill-border);
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  color: var(--bf-ink);
+  font-family: var(--text);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(92, 79, 64, 0.1);
+  transition: all 0.25s ease;
+}
+
+.scroll-down-pill:hover {
+  background: rgba(255, 255, 255, 0.98);
+  transform: translateY(2px);
+  box-shadow: 0 6px 20px rgba(92, 79, 64, 0.16);
+}
+
+.scroll-down-pill svg {
+  animation: bounceDown 1.8s infinite ease-in-out;
+}
+
+/* ==========================================================================
+   Content Sections (Gliding over bg.webp)
+   ========================================================================== */
+/* ==========================================================================
+   Content Sections (Transparent & Compact inside Background Eclipse Arch)
+   ========================================================================== */
+.content-section {
+  padding: 18px 14px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
+.glass-card {
+  background: transparent !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  border-radius: 0 !important;
+  border: none !important;
+  padding: 8px 6px;
+  box-shadow: none !important;
+  text-align: center;
+  width: 100%;
+  max-width: 310px; /* Snugly fits inside the background eclipse arch */
+  margin: 0 auto;
+}
+
+.card-eyebrow {
+  font-family: var(--display);
+  font-size: 11px;
+  letter-spacing: 0.26em;
+  color: var(--bf-gold);
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.card-heading {
+  font-family: var(--serif);
+  font-size: 26px;
+  font-weight: 400;
+  color: var(--bf-ink);
+  margin-bottom: 6px;
+}
+
+.card-subtext {
+  font-size: 13px;
+  color: var(--bf-soft);
+  font-style: italic;
+  margin-bottom: 16px;
+}
+
+/* B. Date Section */
+.date-hero-display {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 8px 0 16px;
+}
+
+.date-large-day {
+  font-family: var(--serif);
+  font-size: 54px;
+  font-weight: 400;
+  line-height: 1;
+  background: linear-gradient(172deg, #d8bc98 0%, #b28a5d 50%, #8f6b42 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 1px 0 rgba(255, 255, 255, 0.9));
+}
+
+.date-month-title {
+  font-family: var(--display);
+  font-size: 14px;
+  letter-spacing: 0.18em;
+  color: var(--bf-ink);
+  margin-top: 4px;
+}
+
+.date-sub-details {
+  font-family: var(--text);
+  font-size: 13px;
+  color: var(--bf-soft);
+  margin-top: 4px;
+}
+
+.calendar-action-wrap {
+  margin-bottom: 18px;
+}
+
+.luxury-outline-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 20px;
+  border-radius: 999px;
+  border: 1px solid var(--bf-gold);
+  background: transparent;
+  color: var(--bf-ink);
+  font-family: var(--display);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.luxury-outline-btn:hover {
+  background: rgba(178, 138, 93, 0.12);
+}
+
+/* Countdown Card: compact and transparent inside the eclipse */
+.countdown-card {
+  background: transparent !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  border-radius: 16px;
+  border: 1px solid rgba(178, 138, 93, 0.35);
+  padding: 12px 8px;
+  max-width: 280px;
+  margin: 0 auto;
+}
+
+.countdown-title {
+  font-family: var(--display);
+  font-size: 10px;
+  letter-spacing: 0.24em;
+  color: var(--bf-gold);
+  margin-bottom: 10px;
+}
+
+.countdown-grid {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.c-unit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 48px;
+}
+
+.c-num {
+  font-family: var(--serif);
+  font-size: 26px;
+  font-weight: 500;
+  color: var(--bf-ink);
+  line-height: 1;
+}
+
+.c-lbl {
+  font-family: var(--sans);
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  color: var(--bf-soft);
+  margin-top: 4px;
+}
+
+.c-sep {
+  font-size: 20px;
+  color: var(--bf-gold);
+  margin-top: -10px;
+}
+
+/* C. Timeline (Compact for Part 2) */
+.timeline-tree {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  position: relative;
+  text-align: left;
+  max-width: 280px;
+  margin: 6px auto 0;
+}
+
+.timeline-tree::before {
+  content: "";
+  position: absolute;
+  left: 64px;
+  top: 6px;
+  bottom: 6px;
+  width: 1px;
+  background: linear-gradient(180deg, var(--bf-gold), transparent);
+}
+
+.tree-step {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.step-time {
+  width: 56px;
+  font-family: var(--serif);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--bf-gold-deep);
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.step-point {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--bf-gold);
+  box-shadow: 0 0 0 2px rgba(178, 138, 93, 0.22);
+  margin-top: 4px;
+  flex-shrink: 0;
+  z-index: 1;
+}
+
+.step-body h4 {
+  font-family: var(--display);
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  color: var(--bf-ink);
+  margin: 0;
+}
+
+.step-body p {
+  font-size: 10.5px;
+  color: var(--bf-soft);
+  margin-top: 1px;
+  line-height: 1.3;
+}
+
+/* D. Venue & Map */
+.venue-address-text {
+  font-size: 12.5px;
+  color: var(--bf-soft);
+  margin-bottom: 14px;
+}
+
+.map-embed-container {
+  width: 100%;
+  max-width: 280px;
+  height: 160px;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid rgba(178, 138, 93, 0.35);
+  margin: 0 auto 16px;
+}
+
+.map-frame-el {
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.luxury-directions-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-width: 180px;
+  padding: 10px 22px;
+  border-radius: 999px;
+  color: var(--bf-ink);
+  text-decoration: none;
+  font-family: var(--display);
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  background: rgba(255, 255, 255, 0.45);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border: 1px solid rgba(178, 138, 93, 0.5);
+  box-shadow: 0 4px 12px rgba(124, 104, 70, 0.12);
+  transition: all 0.2s ease;
+}
+
+.luxury-directions-pill:hover {
+  transform: translateY(-2px);
+  background: rgba(255, 255, 255, 0.75);
+  box-shadow: 0 6px 16px rgba(124, 104, 70, 0.2);
+}
+
+.luxury-directions-pill .pin-svg {
+  width: 13px;
+  height: 18px;
+  color: var(--bf-gold);
+}
+
+/* E. RSVP Form */
+.luxury-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  text-align: left;
+  max-width: 280px;
+  margin: 0 auto;
+}
+
+.field-item label {
+  display: block;
+  font-family: var(--display);
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  color: var(--bf-ink);
+  margin-bottom: 4px;
+  text-transform: uppercase;
+}
+
+.field-item input[type="text"],
+.field-item select,
+.field-item textarea,
+.wish-add-form input[type="text"],
+.wish-add-form textarea {
+  width: 100%;
+  padding: 8px 12px;
+  border-radius: 10px;
+  border: 1px solid rgba(178, 138, 93, 0.35);
+  background: rgba(255, 255, 255, 0.38);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  font-family: var(--text);
+  font-size: 13px;
+  color: var(--bf-ink);
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.field-item input[type="text"]:focus,
+.field-item select:focus,
+.field-item textarea:focus,
+.wish-add-form input[type="text"]:focus,
+.wish-add-form textarea:focus {
+  border-color: var(--bf-gold);
+  background: rgba(255, 255, 255, 0.7);
+}
+
+.radio-chips-row {
+  display: flex;
+  gap: 8px;
+}
+
+.choice-chip {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  padding: 8px 4px;
+  border-radius: 10px;
+  border: 1px solid rgba(178, 138, 93, 0.3);
+  background: rgba(255, 255, 255, 0.35);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  cursor: pointer;
+  font-size: 11px;
+  transition: all 0.2s ease;
+}
+
+.choice-chip input[type="radio"] {
+  accent-color: var(--bf-gold);
+}
+
+.luxury-gold-btn {
+  margin-top: 8px;
+  padding: 13px 20px;
+  border-radius: 999px;
+  border: none;
+  background: linear-gradient(135deg, var(--bf-gold) 0%, var(--bf-gold-deep) 100%);
+  color: #fff;
+  font-family: var(--display);
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  cursor: pointer;
+  width: 100%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 14px rgba(92, 79, 64, 0.25);
+  transition: all 0.2s ease;
+}
+
+.luxury-gold-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(92, 79, 64, 0.35);
+}
+
+.success-banner {
+  margin-top: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  border-radius: 12px;
+  background: #eef5e9;
+  border: 1px solid #b7d6ab;
+  color: #3b612c;
+  font-size: 13px;
+  text-align: left;
+}
+
+.success-banner.hidden {
+  display: none;
+}
+
+/* F. Guestbook */
+.wish-add-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.wish-input-row {
+  display: flex;
+  gap: 8px;
+}
+
+.wish-send-btn {
+  padding: 0 16px;
+  border-radius: 12px;
+  border: 1px solid var(--bf-gold);
+  background: var(--bf-gold);
+  color: #fff;
+  font-family: var(--display);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  cursor: pointer;
+}
+
+.wishes-feed {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  text-align: left;
+  max-height: 260px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.wish-item {
+  background: rgba(255, 255, 255, 0.35);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border: 1px solid rgba(178, 138, 93, 0.25);
+  border-radius: 12px;
+  padding: 10px 12px;
+}
+
+.wish-top {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+
+.wish-name {
+  font-family: var(--display);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--bf-ink);
+}
+
+.wish-date {
+  font-size: 10px;
+  color: var(--bf-soft);
+}
+
+.wish-quote {
+  font-size: 13px;
+  color: var(--bf-ink);
+  line-height: 1.4;
+}
+
+/* G. Footer */
+.invitation-footer {
+  padding: 30px 20px 80px;
+  text-align: center;
+}
+
+.footer-center-gem {
+  color: var(--bf-gold);
+  width: 10px;
+  height: 10px;
+  margin: 0 auto 12px;
+}
+.footer-center-gem svg {
+  width: 100%;
+  height: 100%;
+}
+
+.footer-couple {
+  font-family: var(--serif);
+  font-size: 22px;
+  color: var(--bf-ink);
+}
+
+.footer-tagline {
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  color: var(--bf-soft);
+  margin-top: 4px;
+}
+
+.footer-in-vitely {
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  color: var(--bf-gold);
+  margin-top: 14px;
+  opacity: 0.75;
+}
+
+/* ==========================================================================
+   3. FLOATING MUSIC TOGGLE BUTTON (Headphones Icon)
+   ========================================================================== */
+.floating-audio-widget {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1000;
+}
+
+.headphone-btn {
+  position: relative;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid rgba(178, 138, 93, 0.4);
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--bf-ink);
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.headphone-btn:hover {
+  transform: scale(1.06);
+  background: #fff;
+}
+
+.headphone-svg {
+  width: 20px;
+  height: 20px;
+}
+
+.mute-diagonal-slash {
+  display: none;
+}
+
+.headphone-btn.muted .mute-diagonal-slash {
+  display: block;
+}
+
+.sound-wave-indicator {
+  position: absolute;
+  top: -8px;
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 8px;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.headphone-btn.playing .sound-wave-indicator {
+  opacity: 1;
+}
+
+.sound-wave-indicator span {
+  width: 2px;
+  background: var(--bf-gold);
+  border-radius: 1px;
+  animation: soundBar 1s infinite ease-in-out;
+}
+
+.sound-wave-indicator span:nth-child(1) { height: 4px; animation-delay: 0.1s; }
+.sound-wave-indicator span:nth-child(2) { height: 7px; animation-delay: 0.3s; }
+.sound-wave-indicator span:nth-child(3) { height: 5px; animation-delay: 0.2s; }
+
+/* ==========================================================================
+   Animations & Keyframes
+   ========================================================================== */
+@keyframes lacyTapFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+@keyframes lacyTapRing {
+  0% { transform: scale(0.96); opacity: 0.8; }
+  50% { transform: scale(1.08); opacity: 0; }
+  100% { transform: scale(1.08); opacity: 0; }
+}
+
+@keyframes pearlGoldSheen {
+  0% { transform: translateX(0) skewX(-22deg); }
+  40%, 100% { transform: translateX(400%) skewX(-22deg); }
+}
+
+@keyframes bounceDown {
+  0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+  40% { transform: translateY(5px); }
+  60% { transform: translateY(3px); }
+}
+
+@keyframes soundBar {
+  0%, 100% { height: 3px; }
+  50% { height: 8px; }
+}
+
+/* Staggered Inside Animations */
+.an {
+  opacity: 0;
+  animation-fill-mode: forwards;
+}
+
+.a-soft {
+  animation-name: e-soft;
+  animation-duration: 1.2s;
+}
+
+.a-pen {
+  animation-name: e-pen;
+  animation-duration: 1.8s;
+  animation-timing-function: cubic-bezier(0.33, 0.9, 0.3, 1);
+}
+
+.a-bloom {
+  animation-name: e-bloom;
+  animation-duration: 1s;
+}
+
+.a-btn {
+  animation-name: e-btn;
+  animation-duration: 1.1s;
+}
+
+@keyframes e-soft {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+    filter: blur(5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+@keyframes e-pen {
+  from {
+    opacity: 0;
+    clip-path: inset(0 100% 0 0);
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    clip-path: inset(0 0 0 0);
+    transform: translateY(0);
+  }
+}
+
+@keyframes e-bloom {
+  from {
+    opacity: 0;
+    transform: scale(0.75) rotate(-6deg);
+    filter: blur(6px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+    filter: blur(0);
+  }
+}
+
+@keyframes e-btn {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.92);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Mobile responsive full view (Exact full viewport experience) */
+@media (max-width: 480px) {
+  html, body {
+    background: var(--desktop-bg);
+  }
+  .phone-stage {
+    padding: 0;
+    min-height: 100vh;
+    min-height: 100dvh;
+    width: 100%;
+  }
+  .invitation-container {
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    height: 100vh;
+    height: 100dvh;
+    max-width: 100%;
+  }
+  .invitation-container.intro-done {
+    height: 100vh;
+    height: 100dvh;
+    overflow-y: auto;
+  }
+  .invitation-container.intro-done .fixed-card-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    transform: none;
+    max-width: 100%;
+    width: 100%;
+    height: 100vh;
+    height: 100dvh;
+  }
+  .hero-screen {
+    min-height: 100vh;
+    min-height: 100dvh;
+  }
+  .preview-toolbar {
+    top: 10px;
+    padding: 4px 10px;
+    gap: 8px;
+    font-size: 11px;
+  }
+}
+
+/* ==========================================================================
+   Élysée Sage Theme Variant Support
+   ========================================================================== */
+body.theme-elysee-sage {
+  --desktop-bg: #9ea88f;
+  --bf-card-bg: rgba(246, 248, 242, 0.94);
+  --bf-card-border: rgba(138, 118, 73, 0.28);
+  --bf-pill-border: rgba(138, 118, 73, 0.5);
+  --bf-ink: #384235;
+  --bf-ink-deep: #252e23;
+  --bf-gold: #a89467;
+  --bf-gold-deep: #8a7649;
+  --bf-soft: #6d7768;
+  --bf-cream: #9ea88f;
+}
+
+body.theme-elysee-sage .badge-dot {
+  background: #a8b899;
+  box-shadow: 0 0 8px #a8b899;
+}
+
+body.theme-elysee-sage .fixed-card-bg {
+  background-image: url("assets/elysee/elysee-sage_bg-frame-v1.jpg");
+  background-size: cover;
+  background-position: center top;
+}
+
+/* ==========================================================================
+   ISLAMIC CALLIGRAPHY, EVENTS & WHATSAPP BUTTONS
+   ========================================================================== */
+.arabic-bismillah {
+  font-family: 'Amiri', 'Scheherazade New', 'Traditional Arabic', serif;
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--bf-gold-deep);
+  direction: rtl;
+  line-height: 1.5;
+  margin-bottom: 8px;
+  text-shadow: 0 1px 2px rgba(178, 138, 93, 0.35);
+}
+
+.arabic-alhamdulillah {
+  font-family: 'Amiri', 'Scheherazade New', 'Traditional Arabic', serif;
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--bf-gold-deep);
+  direction: rtl;
+  line-height: 1.4;
+  margin-bottom: 6px;
+}
+
+/* Quranic Verse Card */
+.quran-verse-card {
+  padding: 4px 4px 8px;
+  margin-bottom: 8px;
+  border-bottom: 1px dashed rgba(178, 138, 93, 0.35);
+}
+
+.quran-arabic {
+  font-family: 'Amiri', 'Scheherazade New', 'Traditional Arabic', serif;
+  font-size: 15px;
+  color: var(--bf-gold-deep);
+  direction: rtl;
+  line-height: 1.8;
+  margin-bottom: 5px;
+  text-align: center;
+}
+
+.quran-translation {
+  font-family: var(--text);
+  font-size: 10.5px;
+  font-style: italic;
+  color: var(--bf-soft);
+  line-height: 1.4;
+  margin-bottom: 2px;
+  max-width: 280px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.quran-ref {
+  font-family: var(--display);
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  color: var(--bf-gold);
+  text-transform: uppercase;
+}
+
+.couple-story-text {
+  font-family: var(--text);
+  font-size: 10.5px;
+  font-style: italic;
+  color: var(--bf-soft);
+  line-height: 1.4;
+  max-width: 275px;
+  margin: 6px auto 0;
+}
+
+/* Wedding Events List (Save the Dates) */
+.events-schedule-list {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  max-width: 285px;
+  margin: 6px auto 0;
+  text-align: left;
+}
+
+.event-item-card {
+  background: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border: 1px solid rgba(178, 138, 93, 0.28);
+  border-radius: 11px;
+  padding: 6px 10px;
+}
+
+.event-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 1px;
+}
+
+.event-title {
+  font-family: var(--display);
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--bf-ink);
+}
+
+.event-time-badge {
+  font-family: var(--serif);
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--bf-gold-deep);
+}
+
+.event-date-line {
+  font-family: var(--sans);
+  font-size: 9px;
+  color: var(--bf-gold);
+  letter-spacing: 0.05em;
+  margin-bottom: 1px;
+}
+
+.event-desc {
+  font-size: 9.5px;
+  color: var(--bf-soft);
+  line-height: 1.25;
+}
+
+/* Our Journey Chips */
+.journey-chips-row {
+  display: flex;
+  gap: 6px;
+  justify-content: center;
+  max-width: 285px;
+  margin: 6px auto 0;
+}
+
+.journey-chip {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.25);
+  border: 1px solid rgba(178, 138, 93, 0.25);
+  border-radius: 10px;
+  padding: 6px 3px;
+  text-align: center;
+}
+
+.journey-year {
+  font-family: var(--display);
+  font-size: 9px;
+  color: var(--bf-gold);
+  letter-spacing: 0.08em;
+}
+
+.journey-title {
+  font-family: var(--serif);
+  font-size: 10.5px;
+  font-weight: 600;
+  color: var(--bf-ink);
+  margin-top: 1px;
+}
+
+.journey-desc {
+  font-size: 8.5px;
+  color: var(--bf-soft);
+  margin-top: 1px;
+  line-height: 1.2;
+}
+
+/* In-Theme Luxury Gold Button */
+.whatsapp-gold-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 13px 20px;
+  border-radius: 999px;
+  border: none;
+  background: linear-gradient(135deg, var(--bf-gold) 0%, var(--bf-gold-deep) 100%);
+  color: #fff;
+  font-family: var(--display);
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(92, 79, 64, 0.25);
+  transition: all 0.2s ease;
+  text-decoration: none;
+  margin-top: 8px;
+}
+
+.whatsapp-gold-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(92, 79, 64, 0.35);
+}
