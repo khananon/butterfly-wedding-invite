@@ -3,7 +3,7 @@
  * WEDDING INVITATION CONFIGURATION
  * =========================================================================
  * Dr. Faizan Siddiqui & Sayma Wedding Celebration
- * 15 · November · 2026
+ * 11 · November · 2026
  */
 
 window.WEDDING_CONFIG = {
@@ -34,11 +34,11 @@ window.WEDDING_CONFIG = {
   // 2. MAIN WEDDING DATE & LIVE COUNTDOWN
   // -----------------------------------------------------------------------
   date: {
-    day: "15",
+    day: "11",
     monthYear: "NOVEMBER 2026",
     dayOfWeekAndTime: "Sunday · 7:00 PM",
     // 15 November 2026, 7:00 PM IST (Target for live countdown)
-    countdownTarget: "2026-11-15T19:00:00+05:30"
+    countdownTarget: "2026-11-11T19:00:00+05:30"
   },
 
   // -----------------------------------------------------------------------
@@ -79,35 +79,35 @@ window.WEDDING_CONFIG = {
   schedule: [
     {
       time: "Evening",
-      dateStr: "Friday, 13 Nov 2026",
+      dateStr: "Tuesday, 10 Nov 2026",
       title: "Mandha / Mehendi",
       description: "An evening of beautiful henna artistry, laughter, and joy.",
       venue: "White Palace"
     },
     {
-      time: "Morning",
-      dateStr: "Saturday, 14 Nov 2026",
+      time: "Evening",
+      dateStr: "Tuesday, 10 Nov 2026",
       title: "Haldi Ceremony",
       description: "A vibrant morning ceremony filled with blessings and turmeric.",
       venue: "White Palace"
     },
     {
-      time: "Evening",
-      dateStr: "Saturday, 14 Nov 2026",
+      time: "Night",
+      dateStr: "Tuesday, 10 Nov 2026",
       title: "Sangeet Night",
       description: "A night of music, dances, and heartfelt celebrations.",
       venue: "White Palace"
     },
     {
-      time: "Evening",
-      dateStr: "Sunday, 15 Nov 2026",
+      time: "Night",
+      dateStr: "Wednesday, 11 Nov 2026",
       title: "Barat & Wedding",
       description: "The sacred union of two souls in the presence of Allah's blessings.",
       venue: "White Palace"
     },
     {
       time: "Evening",
-      dateStr: "Monday, 16 Nov 2026",
+      dateStr: "Friday, 13 Nov 2026",
       title: "Reception",
       description: "A night of celebration and joy.",
       venue: "White Palace"
@@ -162,7 +162,7 @@ window.WEDDING_CONFIG = {
   footer: {
     alhamdulillah: "ٱلْحَمْدُ لِلَّٰهِ",
     coupleNames: "Dr. Faizan Siddiqui & Sayma",
-    dateAndCity: "15 · November · 2026",
+    dateAndCity: "11 · November · 2026",
     tagline: "Your presence and prayers mean the world to us. We look forward to celebrating this blessed occasion with you.",
     closingLine: "Dr. Faizan Siddiqui & Sayma · 2026"
   }
