@@ -87,7 +87,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     }
 
-    // 4. Wedding Events Schedule (Save The Dates)
+    // 4. Wedding Events Schedule (Save The Dates - Compact & Engraved)
     if (Array.isArray(cfg.schedule)) {
       const list = document.getElementById("eventsScheduleList");
       if (list) {
@@ -95,20 +95,21 @@ document.addEventListener("DOMContentLoaded", () => {
         cfg.schedule.forEach((item) => {
           const card = document.createElement("div");
           card.className = "event-item-card";
+          const descHtml = item.description ? `<div class="event-desc">${escapeHtml(item.description)}</div>` : "";
           card.innerHTML = `
             <div class="event-header-row">
               <span class="event-title">${escapeHtml(item.title || "")}</span>
               <span class="event-time-badge">${escapeHtml(item.time || "")}</span>
             </div>
             <div class="event-date-line">${escapeHtml(item.dateStr || "")}</div>
-            <div class="event-desc">${escapeHtml(item.description || "")}</div>
+            ${descHtml}
           `;
           list.appendChild(card);
         });
       }
     }
 
-    // 5. Our Journey (Love Story Milestones)
+    // 5. Our Journey (Love Story Milestones - Sleek & Compact)
     if (Array.isArray(cfg.journey)) {
       const jRow = document.getElementById("journeyChipsRow");
       if (jRow) {
@@ -116,10 +117,11 @@ document.addEventListener("DOMContentLoaded", () => {
         cfg.journey.forEach((j) => {
           const chip = document.createElement("div");
           chip.className = "journey-chip";
+          const descHtml = j.description ? `<div class="journey-desc">${escapeHtml(j.description)}</div>` : "";
           chip.innerHTML = `
             <div class="journey-year">${escapeHtml(j.year || "")}</div>
             <div class="journey-title">${escapeHtml(j.title || "")}</div>
-            <div class="journey-desc">${escapeHtml(j.description || "")}</div>
+            ${descHtml}
           `;
           jRow.appendChild(chip);
         });
@@ -140,13 +142,23 @@ document.addEventListener("DOMContentLoaded", () => {
         const el = document.getElementById("venueAddress");
         if (el) el.textContent = cfg.venue.address;
       }
-      if (cfg.venue.phone) {
-        const el = document.getElementById("venuePhoneLine");
-        if (el) el.textContent = "Phone: " + cfg.venue.phone;
+      const phoneEl = document.getElementById("venuePhoneLine");
+      if (phoneEl) {
+        if (cfg.venue.phone) {
+          phoneEl.textContent = "Phone: " + cfg.venue.phone;
+          phoneEl.style.display = "";
+        } else {
+          phoneEl.style.display = "none";
+        }
       }
-      if (cfg.venue.mapEmbedUrl) {
-        const el = document.getElementById("venueMapIframe");
-        if (el) el.src = cfg.venue.mapEmbedUrl;
+      const mapEl = document.getElementById("venueMapIframe");
+      if (mapEl) {
+        if (cfg.venue.mapEmbedUrl) {
+          mapEl.src = cfg.venue.mapEmbedUrl;
+          if (mapEl.parentElement) mapEl.parentElement.style.display = "";
+        } else {
+          if (mapEl.parentElement) mapEl.parentElement.style.display = "none";
+        }
       }
       if (cfg.venue.directionsUrl) {
         const el = document.getElementById("btnVenueDirections");
@@ -160,6 +172,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // 7. RSVP Text Config
     if (cfg.rsvp) {
+      if (cfg.rsvp.sectionEyebrow) {
+        const el = document.getElementById("rsvpEyebrow");
+        if (el) el.textContent = cfg.rsvp.sectionEyebrow;
+      }
       if (cfg.rsvp.acceptOptionText) {
         const el = document.getElementById("rsvpAcceptLabel");
         if (el) el.textContent = cfg.rsvp.acceptOptionText;
@@ -176,6 +192,10 @@ document.addEventListener("DOMContentLoaded", () => {
         const el = document.getElementById("rsvpNote");
         if (el) el.placeholder = cfg.rsvp.notePlaceholder;
       }
+      if (cfg.rsvp.submitButtonText) {
+        const el = document.getElementById("rsvpSubmitText");
+        if (el) el.textContent = cfg.rsvp.submitButtonText;
+      }
     }
 
     // 8. Guestbook Wishes Config
@@ -188,9 +208,14 @@ document.addEventListener("DOMContentLoaded", () => {
         const el = document.getElementById("guestbookHeading");
         if (el) el.textContent = cfg.guestbook.heading;
       }
-      if (cfg.guestbook.subtext) {
-        const el = document.getElementById("guestbookSubtext");
-        if (el) el.textContent = cfg.guestbook.subtext;
+      const subEl = document.getElementById("guestbookSubtext");
+      if (subEl) {
+        if (cfg.guestbook.subtext) {
+          subEl.textContent = cfg.guestbook.subtext;
+          subEl.style.display = "";
+        } else {
+          subEl.style.display = "none";
+        }
       }
       if (cfg.guestbook.namePlaceholder) {
         const el = document.getElementById("wishAuthor");
@@ -199,6 +224,10 @@ document.addEventListener("DOMContentLoaded", () => {
       if (cfg.guestbook.messagePlaceholder) {
         const el = document.getElementById("wishMessage");
         if (el) el.placeholder = cfg.guestbook.messagePlaceholder;
+      }
+      if (cfg.guestbook.postButtonText) {
+        const el = document.getElementById("wishSubmitText");
+        if (el) el.textContent = cfg.guestbook.postButtonText;
       }
     }
 
