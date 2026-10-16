@@ -713,35 +713,29 @@ html.intro-active, body.intro-active {
 .scroll-down-pill {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  padding: 10px 22px;
+  gap: 6px;
+  padding: 8px 20px;
   border-radius: 999px;
-  border: 1px solid var(--bf-pill-border);
-  background: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(178, 138, 93, 0.45);
+  background: transparent;
   color: var(--bf-ink);
-  font-family: var(--text);
-  font-size: 13px;
-  font-weight: 500;
+  font-family: var(--display);
+  font-size: 10.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
   cursor: pointer;
-  box-shadow: 0 4px 16px rgba(92, 79, 64, 0.1);
   transition: all 0.25s ease;
 }
 
 .scroll-down-pill:hover {
-  background: rgba(255, 255, 255, 0.98);
+  background: rgba(178, 138, 93, 0.12);
   transform: translateY(2px);
-  box-shadow: 0 6px 20px rgba(92, 79, 64, 0.16);
 }
 
 .scroll-down-pill svg {
   animation: bounceDown 1.8s infinite ease-in-out;
 }
 
-/* ==========================================================================
-   Content Sections (Gliding over bg.webp)
-   ========================================================================== */
 /* ==========================================================================
    Content Sections (Transparent & Compact inside Background Eclipse Arch)
    ========================================================================== */
@@ -757,16 +751,12 @@ html.intro-active, body.intro-active {
   width: 100%;
   max-width: 275px;
   margin: 0 auto;
-  padding: 14px 12px;
-  background: rgba(248, 244, 237, 0.45);
-  border: 1px solid rgba(178, 138, 93, 0.28);
-  border-radius: 16px;
-  box-shadow: 
-    inset 0 1.5px 3px rgba(70, 50, 25, 0.08),
-    inset 0 -1px 1px rgba(255, 255, 255, 0.75),
-    0 1px 0 rgba(255, 255, 255, 0.7);
-  backdrop-filter: blur(2px);
-  -webkit-backdrop-filter: blur(2px);
+  padding: 8px 6px;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
   text-align: center;
   display: flex;
   flex-direction: column;
@@ -885,32 +875,32 @@ html.intro-active, body.intro-active {
   gap: 6px;
   padding: 6px 16px;
   border-radius: 999px;
-  border: 1px solid rgba(178, 138, 93, 0.5);
-  background: rgba(255, 255, 255, 0.5);
+  border: 1px solid rgba(178, 138, 93, 0.45);
+  background: transparent;
   color: #3d3125;
   font-family: var(--display);
   font-size: 10px;
   letter-spacing: 0.12em;
   cursor: pointer;
-  box-shadow: inset 0 1px 1px rgba(60, 45, 25, 0.06), 0 1px 0 rgba(255, 255, 255, 0.8);
+  box-shadow: none;
   transition: all 0.2s ease;
 }
 
 .luxury-outline-btn:hover {
-  background: rgba(255, 255, 255, 0.85);
+  background: rgba(178, 138, 93, 0.12);
   transform: translateY(-1px);
 }
 
-/* Countdown Card: compact and engraved */
+/* Countdown Card: transparent inside the arch */
 .countdown-card {
-  background: rgba(255, 255, 255, 0.38) !important;
+  background: transparent !important;
   border-radius: 12px;
-  border: 1px solid rgba(178, 138, 93, 0.3);
+  border: 1px solid rgba(178, 138, 93, 0.35);
   padding: 8px 6px;
   max-width: 250px;
   width: 100%;
   margin: 4px auto 0;
-  box-shadow: inset 0 1px 2px rgba(60, 45, 25, 0.06), 0 1px 0 rgba(255, 255, 255, 0.75);
+  box-shadow: none !important;
 }
 
 .countdown-title {
@@ -1045,15 +1035,15 @@ html.intro-active, body.intro-active {
   font-family: var(--display);
   font-size: 10px;
   letter-spacing: 0.1em;
-  background: rgba(255, 255, 255, 0.55);
+  background: transparent;
   border: 1px solid rgba(178, 138, 93, 0.45);
-  box-shadow: inset 0 1px 1px rgba(60, 45, 25, 0.06), 0 1px 0 rgba(255, 255, 255, 0.8);
+  box-shadow: none;
   transition: all 0.2s ease;
 }
 
 .luxury-directions-pill:hover {
   transform: translateY(-1px);
-  background: rgba(255, 255, 255, 0.85);
+  background: rgba(178, 138, 93, 0.12);
 }
 
 .luxury-directions-pill .pin-svg {
@@ -1091,30 +1081,31 @@ html.intro-active, body.intro-active {
   height: 32px;
   padding: 4px 10px;
   border-radius: 8px;
-  border: 1px solid rgba(165, 130, 90, 0.35);
-  background: rgba(255, 255, 255, 0.55);
+  border: 1px solid rgba(165, 130, 90, 0.45);
+  background: transparent;
   color: #3d3125;
   font-family: var(--text);
   font-size: 11.5px;
-  box-shadow: 
-    inset 0 1.5px 2px rgba(65, 45, 25, 0.1),
-    0 1px 0 rgba(255, 255, 255, 0.8);
+  box-shadow: none;
   outline: none;
   transition: all 0.2s ease;
   box-sizing: border-box;
 }
 
 .engraved-input::placeholder {
-  color: #958473;
+  color: #8c7a69;
   font-style: italic;
 }
 
 .engraved-input:focus {
   border-color: #9c7645;
-  background: rgba(255, 255, 255, 0.88);
-  box-shadow: 
-    inset 0 1.5px 2px rgba(65, 45, 25, 0.12),
-    0 0 0 2px rgba(178, 138, 93, 0.25);
+  background: rgba(178, 138, 93, 0.08);
+  box-shadow: 0 0 0 2px rgba(178, 138, 93, 0.25);
+}
+
+.engraved-input option {
+  background: #e8dccf;
+  color: #3d3125;
 }
 
 .radio-chips-row {
@@ -1131,15 +1122,19 @@ html.intro-active, body.intro-active {
   gap: 4px;
   padding: 5px 4px;
   border-radius: 8px;
-  border: 1px solid rgba(178, 138, 93, 0.3);
-  background: rgba(255, 255, 255, 0.48);
-  box-shadow: inset 0 1px 1px rgba(60, 45, 25, 0.06), 0 1px 0 rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(178, 138, 93, 0.4);
+  background: transparent;
+  box-shadow: none;
   cursor: pointer;
   font-family: var(--display);
   font-size: 9.5px;
   letter-spacing: 0.08em;
   color: #3d3125;
   transition: all 0.2s ease;
+}
+
+.choice-chip:hover {
+  background: rgba(178, 138, 93, 0.1);
 }
 
 .choice-chip input[type="radio"] {
@@ -1239,12 +1234,10 @@ html.intro-active, body.intro-active {
 }
 
 .wish-item {
-  background: rgba(255, 255, 255, 0.35);
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
-  border: 1px solid rgba(178, 138, 93, 0.25);
-  border-radius: 12px;
-  padding: 10px 12px;
+  background: transparent;
+  border: 1px solid rgba(178, 138, 93, 0.3);
+  border-radius: 10px;
+  padding: 8px 10px;
 }
 
 .wish-top {
@@ -1710,11 +1703,11 @@ body.theme-elysee-sage .fixed-card-bg {
 }
 
 .event-item-card {
-  background: rgba(255, 255, 255, 0.45);
-  border: 1px solid rgba(178, 138, 93, 0.28);
+  background: transparent;
+  border: 1px solid rgba(178, 138, 93, 0.35);
   border-radius: 8px;
   padding: 5px 8px;
-  box-shadow: inset 0 1px 1px rgba(60, 45, 25, 0.05), 0 1px 0 rgba(255, 255, 255, 0.75);
+  box-shadow: none;
 }
 
 .event-header-row {
@@ -1766,12 +1759,12 @@ body.theme-elysee-sage .fixed-card-bg {
 
 .journey-chip {
   flex: 1;
-  background: rgba(255, 255, 255, 0.45);
-  border: 1px solid rgba(178, 138, 93, 0.28);
+  background: transparent;
+  border: 1px solid rgba(178, 138, 93, 0.35);
   border-radius: 8px;
   padding: 4px 2px;
   text-align: center;
-  box-shadow: inset 0 1px 1px rgba(60, 45, 25, 0.05), 0 1px 0 rgba(255, 255, 255, 0.75);
+  box-shadow: none;
 }
 
 .journey-year {
