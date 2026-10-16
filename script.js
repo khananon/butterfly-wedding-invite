@@ -250,6 +250,18 @@ document.addEventListener("DOMContentLoaded", () => {
         if (el) el.textContent = cfg.footer.tagline;
       }
     }
+
+    // 10. Brand & Advertisement
+    if (cfg.brand) {
+      const linkEl = document.getElementById("brandAdLink");
+      if (linkEl && cfg.brand.url) linkEl.href = cfg.brand.url;
+      const prefixEl = document.getElementById("brandAdPrefix");
+      if (prefixEl && cfg.brand.prefix) prefixEl.textContent = cfg.brand.prefix;
+      const titleEl = document.getElementById("brandAdTitle");
+      if (titleEl && cfg.brand.name) titleEl.textContent = cfg.brand.name;
+      const logoEl = document.getElementById("brandAdLogo");
+      if (logoEl && cfg.brand.icon) logoEl.src = cfg.brand.icon;
+    }
   }
 
   populateFromConfig();

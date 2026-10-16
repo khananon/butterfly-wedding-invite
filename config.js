@@ -158,5 +158,15 @@ window.WEDDING_CONFIG = {
     dateAndCity: "11 · November · 2026",
     tagline: "Your presence and prayers mean the world to us.",
     closingLine: "Dr. Faizan Siddiqui & Sayma · 2026"
+  },
+
+  // -----------------------------------------------------------------------
+  // 10. BRANDING & ADVERTISEMENT
+  // -----------------------------------------------------------------------
+  brand: {
+    prefix: "Designed by",
+    name: "Vows & Knots",
+    url: "https://vowsandknots.vercel.app/",
+    icon: "assets/butterfly/vows-and-knots.png"
   }
 };

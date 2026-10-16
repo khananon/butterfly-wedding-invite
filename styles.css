@@ -1817,3 +1817,67 @@ body.theme-elysee-sage .fixed-card-bg {
   transform: translateY(-2px);
   box-shadow: 0 6px 18px rgba(92, 79, 64, 0.35);
 }
+
+/* ==========================================================================
+   Luxury Brand / Advertisement Credit Badge (Vows & Knots)
+   ========================================================================== */
+.brand-ad-wrap {
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.brand-ad-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 4px 12px 4px 5px;
+  border-radius: 999px;
+  border: 1px solid rgba(178, 138, 93, 0.4);
+  background: transparent;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.brand-ad-pill:hover {
+  transform: translateY(-1px);
+  border-color: rgba(178, 138, 93, 0.7);
+  background: rgba(178, 138, 93, 0.1);
+  box-shadow: 0 2px 8px rgba(178, 138, 93, 0.2);
+}
+
+.brand-ad-logo {
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+  object-fit: cover;
+  display: block;
+  box-shadow: 0 1px 3px rgba(60, 40, 20, 0.25);
+}
+
+.brand-ad-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  line-height: 1.1;
+}
+
+.brand-ad-prefix {
+  font-family: var(--display);
+  font-size: 7.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #8c7a69;
+}
+
+.brand-ad-title {
+  font-family: var(--serif);
+  font-size: 10.5px;
+  font-weight: 600;
+  color: #433526;
+  letter-spacing: 0.04em;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.8);
+}
